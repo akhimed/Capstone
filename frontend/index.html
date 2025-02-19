@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Scheduling App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>AI Scheduling App</h1>
+
+    <div class="container">
+        <!-- Form to Add Availability -->
+        <h2>Add Availability</h2>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="text" id="availability" placeholder="Enter Availability (e.g., Monday 9 AM - 5 PM)">
+        <button onclick="submitAvailability()">Submit</button>
+
+        <!-- Button to Generate Schedule -->
+        <h2>Generated Schedule</h2>
+        <button onclick="fetchSchedule()">Generate AI Schedule</button>
+
+        <!-- Display Schedule -->
+        <ul id="scheduleList"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

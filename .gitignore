@@ -1,0 +1,22 @@
+# Ignore environment variables
+.env
+
+# Python-related ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+
+# Logs and database files
+*.log
+*.sqlite3
+
+# VS Code settings (if applicable)
+.vscode/
+
+# Dependency files
+*.egg-info/
