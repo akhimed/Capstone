@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Schedule Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li id="dashboardItem"><a href="dashboard.html">Dashboard</a></li>
+            <li id="loginItem"><a href="login.html">Login</a></li>
+            <li id="registerItem"><a href="register.html">Register</a></li>
+            <li id="logoutItem" style="display: none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>Schedule Calendar</h1>
+
+    <div id="calendar"></div>
+    <p id="scheduleMessage" style="margin-top: 10px; font-style: italic;"></p>
+
+    <!-- Calendar Scripts -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            updateNavbarVisibility();
+    
+            const calendarEl = document.getElementById("calendar");
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                events: []
+            });
+    
+            calendar.render();
+            loadPostedSchedule(calendar); // 👈 THIS is what actually loads your saved schedule
+        });
+    </script>
+    
+</body>
+</html>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Scheduling App</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
 </head>
 <body>
     <nav>
@@ -18,20 +18,24 @@
         </ul>
     </nav>
 
-    <h1>AI Scheduling App</h1>
+    <h1>Owner Dashboard</h1>
 
-    <div class="container">
-        <!-- Form to Add Availability -->
-        <h2>Add Availability</h2>
-        <input type="text" id="name" placeholder="Your Name">
-        <input type="text" id="availability" placeholder="Enter Availability (e.g., Monday 9 AM - 5 PM)">
-        <button onclick="submitAvailability()">Submit</button>
+    <!-- Owner Controls -->
+    <div id="ownerControls" style="display:none">
+        <button onclick="fetchAISchedule()">Generate AI Schedule</button>
+        <button onclick="postSchedule()">Post Schedule</button>
     </div>
 
+    <div id="calendar"></div>
+    <p id="scheduleMessage" style="margin-top: 10px; font-style: italic;"></p>
+
+    <!-- Scripts at the bottom for safe loading -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <script src="script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             updateNavbarVisibility();
+            setupDashboard();
         });
     </script>
 </body>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Scheduling App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li id="dashboardItem"><a href="dashboard.html">Dashboard</a></li>
+            <li id="loginItem"><a href="login.html">Login</a></li>
+            <li id="registerItem"><a href="register.html">Register</a></li>
+            <li id="logoutItem" style="display:none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>Register</h1>
+    <form onsubmit="registerUser(event)">
+        <input type="text" id="newUsername" placeholder="Username" required>
+        <input type="password" id="newPassword" placeholder="Password" required>
+    
+        <div style="margin: 10px 0;">
+            <label><input type="radio" name="role" value="owner" required> Owner</label><br>
+            <label><input type="radio" name="role" value="employee"> Employee</label>
+        </div>
+    
+        <button type="submit">Register</button>
+    </form>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", updateNavbarVisibility);
+    </script>
+</body>
+</html>
