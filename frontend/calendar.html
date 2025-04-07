@@ -13,34 +13,81 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="calendar.html">Calendar</a></li>
             <li id="dashboardItem"><a href="dashboard.html">Dashboard</a></li>
+            <li id="manageShiftsItem" style="display: none;"><a href="manage_shifts.html">Manage Shifts</a></li>
             <li id="loginItem"><a href="login.html">Login</a></li>
             <li id="registerItem"><a href="register.html">Register</a></li>
             <li id="logoutItem" style="display: none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+            <li><a href="http://18.212.196.155/moodle/" target="_blank">Work Sync LMS</a></li>
         </ul>
     </nav>
 
-    <h1>Schedule Calendar</h1>
+    <h1 class="title">Schedule Calendar</h1>
 
     <div id="calendar"></div>
     <p id="scheduleMessage" style="margin-top: 10px; font-style: italic;"></p>
 
-    <!-- Calendar Scripts -->
+    <!-- 🔁 Incoming Swap Requests -->
+    <h2 style="margin-top: 30px;">Incoming Swap Requests</h2>
+    <div id="swapRequestsList"></div>
+
+    <!-- 📤 Outgoing Swap Requests -->
+    <h2 style="margin-top: 30px;">Outgoing Swap Requests</h2>
+    <div id="outgoingSwapRequestsList"></div>
+
+    <!-- Scripts -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <script src="script.js"></script>
     <script>
+        calendar = null;  // ✅ Global so we can access it later
+    
         document.addEventListener("DOMContentLoaded", () => {
+            const role = sessionStorage.getItem("role");
+            const username = sessionStorage.getItem("username");
+    
+            // 🔒 Protect access to calendar
+            if (!role || !username) {
+                alert("You must be logged in to access the calendar.");
+                window.location.href = "login.html";
+                return;
+            }
+    
+            // 🔄 Adjust navbar based on role
             updateNavbarVisibility();
     
+            // 📅 Initialize global calendar instance
             const calendarEl = document.getElementById("calendar");
-            const calendar = new FullCalendar.Calendar(calendarEl, {
+            calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: "dayGridMonth",
+                buttonText: {
+                    today: "Today"
+                },
+                editable: false,
                 events: []
             });
     
             calendar.render();
-            loadPostedSchedule(calendar); // 👈 THIS is what actually loads your saved schedule
+    
+            // 🚀 Load data
+            loadPostedSchedule(calendar);         // all shifts
+            loadSwapRequests();                   // incoming shift swaps
+            loadOutgoingSwapRequests();           // outgoing shift swaps
         });
     </script>
     
+    
+
+    <footer>
+        <p>This project was created as part of an academic course at George Mason University and is intended for educational purposes only. All rights reserved.</p>
+    </footer>
+    <!-- 🔁 Swap Modal -->
+<div id="swapModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Select a user to request a swap:</h3>
+      <select id="swapUserDropdown"></select>
+      <button id="confirmSwapBtn" onclick="confirmSwap()">Confirm Swap</button>
+      <button onclick="closeSwapModal()">Cancel</button>
+    </div>
+  </div>
+  
 </body>
 </html>

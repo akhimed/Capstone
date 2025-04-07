@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Employee Shifts</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li id="manageShiftsItem" style="display: none;"><a href="manage_shifts.html">Manage Shifts</a></li>
+      <li id="loginItem"><a href="login.html">Login</a></li>
+      <li id="registerItem"><a href="register.html">Register</a></li>
+      <li id="logoutItem" style="display: none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+      <li><a href="http://18.212.196.155/moodle/" target="_blank">Work Sync LMS</a></li>
+    </ul>
+  </nav>
+
+  <h1>Manage Employee Shifts</h1>
+
+  <div id="shiftList"></div>
+
+  <h3>Add New Shift</h3>
+  <input type="text" id="newName" placeholder="Employee Name" required>
+
+  <label for="newDate">Date:</label>
+  <input type="date" id="newDate" required>
+
+  <label for="newStartTime">Start Time:</label>
+  <select id="newStartTime" required>
+    <option value="">Start</option>
+    <option value="6 AM">6 AM</option>
+    <option value="7 AM">7 AM</option>
+    <option value="8 AM">8 AM</option>
+    <option value="9 AM">9 AM</option>
+    <option value="10 AM">10 AM</option>
+    <option value="11 AM">11 AM</option>
+    <option value="12 PM">12 PM</option>
+    <option value="1 PM">1 PM</option>
+    <option value="2 PM">2 PM</option>
+    <option value="3 PM">3 PM</option>
+    <option value="4 PM">4 PM</option>
+    <option value="5 PM">5 PM</option>
+    <option value="6 PM">6 PM</option>
+    <option value="7 PM">7 PM</option>
+    <option value="8 PM">8 PM</option>
+    <option value="9 PM">9 PM</option>
+  </select>
+
+  <label for="newEndTime">End Time:</label>
+  <select id="newEndTime" required>
+    <option value="">End</option>
+    <option value="7 AM">7 AM</option>
+    <option value="8 AM">8 AM</option>
+    <option value="9 AM">9 AM</option>
+    <option value="10 AM">10 AM</option>
+    <option value="11 AM">11 AM</option>
+    <option value="12 PM">12 PM</option>
+    <option value="1 PM">1 PM</option>
+    <option value="2 PM">2 PM</option>
+    <option value="3 PM">3 PM</option>
+    <option value="4 PM">4 PM</option>
+    <option value="5 PM">5 PM</option>
+    <option value="6 PM">6 PM</option>
+    <option value="7 PM">7 PM</option>
+    <option value="8 PM">8 PM</option>
+    <option value="9 PM">9 PM</option>
+    <option value="10 PM">10 PM</option>
+  </select>
+
+  <button onclick="addShift()">Add Shift</button>
+
+  <hr>
+
+  <section class="pending-accounts-section">
+    <h2>Pending Employee Accounts</h2>
+    <ul id="pendingList"></ul>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const role = sessionStorage.getItem("role");
+
+      if (role !== "owner") {
+        alert("You are not authorized to view this page.");
+        window.location.href = "index.html";
+        return;
+      }
+
+      updateNavbarVisibility();
+      loadShiftManagement();
+
+      // 🔐 Load pending users for approval
+      fetch("/pending_users")
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById("pendingList");
+          data.users.forEach(user => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              ${user.username} (${user.email})
+              <button onclick="approve('${user.username}')">Approve</button>
+              <button onclick="reject('${user.username}')">Reject</button>`;
+
+            list.appendChild(li);
+          });
+        });
+    });
+
+    function approve(username) {
+      fetch(`/approve_user/${username}`, { method: "POST" })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          location.reload();
+        });
+    }
+    function reject(username) {
+  if (!confirm(`Are you sure you want to reject ${username}?`)) return;
+
+  fetch(`/reject_user/${username}`, { method: "POST" })
+    .then(res => res.json())
+    .then(data => {
+      alert(data.message || data.error);
+      location.reload();
+    });
+}
+
+  </script>
+</body>
+</html>

@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - AI Scheduling App</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-            <li id="dashboardItem"><a href="dashboard.html">Dashboard</a></li>
-            <li id="loginItem"><a href="login.html">Login</a></li>
-            <li id="registerItem"><a href="register.html">Register</a></li>
-            <li id="logoutItem" style="display:none;"><a href="#" onclick="logoutUser()">Logout</a></li>
-        </ul>
-    </nav>
+<body class="register-page"> <!-- reuse the same styling class -->
 
-    <h1>Login</h1>
-    <form onsubmit="loginUser(event)">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li id="manageShiftsItem" style="display: none;"><a href="manage_shifts.html">Manage Shifts</a></li>
+      <li id="loginItem"><a href="login.html">Login</a></li>
+      <li id="registerItem"><a href="register.html">Register</a></li>
+      <li id="logoutItem" style="display: none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+      <li><a href="http://18.212.196.155/moodle/" target="_blank">Work Sync LMS</a></li>
+    </ul>
+  </nav>
 
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", updateNavbarVisibility);
-    </script>
+  <h1 class="title">Login</h1>
+
+  <div class="container">
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="loginUser(event)">Login</button>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    updateNavbarVisibility();
+  </script>
+
+  <footer>
+    <p>This project was created as part of an academic course at George Mason University and is intended for educational purposes only. All rights reserved.</p>
+  </footer>
+
 </body>
 </html>

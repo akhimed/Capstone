@@ -12,31 +12,58 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="calendar.html">Calendar</a></li>
             <li id="dashboardItem"><a href="dashboard.html">Dashboard</a></li>
+            <li id="manageShiftsItem" style="display: none;"><a href="manage_shifts.html">Manage Shifts</a></li>
             <li id="loginItem"><a href="login.html">Login</a></li>
             <li id="registerItem"><a href="register.html">Register</a></li>
             <li id="logoutItem" style="display: none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+            <li><a href="http://18.212.196.155/moodle/" target="_blank">Work Sync LMS</a></li>
         </ul>
     </nav>
 
-    <h1>Owner Dashboard</h1>
+    <h1 class="title">Owner Dashboard</h1>
 
-    <!-- Owner Controls -->
-    <div id="ownerControls" style="display:none">
-        <button onclick="fetchAISchedule()">Generate AI Schedule</button>
-        <button onclick="postSchedule()">Post Schedule</button>
+    <div style="width: 100%;">
+        <div id="ownerControls" class="dashboard-controls" style="display: none;">
+            <button onclick="confirmAISchedule()" class="dashboard-btn generate-btn">Generate AI Schedule</button>
+            <button onclick="confirmPostSchedule()" class="dashboard-btn post-btn">Post Schedule</button>
+        </div>
     </div>
+
+    <div id="loadingSpinner" style="display: none; text-align: center; margin-top: 20px;">
+        <p id="spinnerMessage">Processing...</p>
+        <div class="spinner"></div>
+    </div>
+
 
     <div id="calendar"></div>
     <p id="scheduleMessage" style="margin-top: 10px; font-style: italic;"></p>
 
-    <!-- Scripts at the bottom for safe loading -->
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <p id="confirmationMessage">Are you sure?</p>
+            <div class="modal-buttons">
+                <button id="confirmYes" class="modal-btn yes-btn">Yes</button>
+                <button id="confirmNo" class="modal-btn no-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            updateNavbarVisibility();
-            setupDashboard();
-        });
-    </script>
+        <script src="script.js"></script>
+        <script>
+            // ✅ Declare globally ONCE
+            let calendar = null;
+
+            document.addEventListener("DOMContentLoaded", () => {
+                updateNavbarVisibility();
+                setupDashboard();  // Handles calendar creation & rendering
+            });
+        </script>
+
+
+    <footer>
+        <p>This project was created as part of an academic course at George Mason University and is intended for educational purposes only. All rights reserved.</p>
+    </footer>
 </body>
 </html>

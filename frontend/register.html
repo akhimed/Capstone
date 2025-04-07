@@ -6,34 +6,68 @@
     <title>Register - AI Scheduling App</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="register-page">
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="calendar.html">Calendar</a></li>
             <li id="dashboardItem"><a href="dashboard.html">Dashboard</a></li>
+            <li id="manageShiftsItem" style="display: none;"><a href="manage_shifts.html">Manage Shifts</a></li>
             <li id="loginItem"><a href="login.html">Login</a></li>
             <li id="registerItem"><a href="register.html">Register</a></li>
             <li id="logoutItem" style="display:none;"><a href="#" onclick="logoutUser()">Logout</a></li>
+            <li><a href="http://18.212.196.155/moodle/" target="_blank">Work Sync LMS</a></li>
         </ul>
     </nav>
 
-    <h1>Register</h1>
+    <h1 class="title">Register</h1>
     <form onsubmit="registerUser(event)">
         <input type="text" id="newUsername" placeholder="Username" required>
         <input type="password" id="newPassword" placeholder="Password" required>
-    
-        <div style="margin: 10px 0;">
-            <label><input type="radio" name="role" value="owner" required> Owner</label><br>
-            <label><input type="radio" name="role" value="employee"> Employee</label>
+        <input type="email" id="newEmail" placeholder="Email" required>
+
+        <div class="role-selection">
+            <label class="role-option">
+                <input type="radio" name="role" value="owner" required>
+                Owner
+            </label>
+            <label class="role-option">
+                <input type="radio" name="role" value="employee">
+                Employee
+            </label>
         </div>
-    
-        <button type="submit">Register</button>
+
+        <!-- Hidden owner key input -->
+        <div id="ownerKeyField" style="display: none;">
+            <input type="text" id="ownerKey" placeholder="Owner Registration Key">
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit">Register</button>
+            <button type="reset" class="reset-btn">Reset</button>
+        </div>
     </form>
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", updateNavbarVisibility);
+        document.addEventListener("DOMContentLoaded", () => {
+            updateNavbarVisibility();
+
+            const roleRadios = document.querySelectorAll('input[name="role"]');
+            const ownerKeyField = document.getElementById("ownerKeyField");
+
+            roleRadios.forEach(radio => {
+                radio.addEventListener("change", () => {
+                    ownerKeyField.style.display = (radio.value === "owner" && radio.checked)
+                        ? "block"
+                        : "none";
+                });
+            });
+        });
     </script>
+
+    <footer>
+        <p>This project was created as part of an academic course at George Mason University and is intended for educational purposes only. All rights reserved.</p>
+    </footer>
 </body>
 </html>
