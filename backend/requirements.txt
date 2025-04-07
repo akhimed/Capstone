@@ -1,0 +1,7 @@
+Flask
+flask-cors
+flask-mail
+python-dotenv
+mysql-connector-python
+openai
+gunicorn
